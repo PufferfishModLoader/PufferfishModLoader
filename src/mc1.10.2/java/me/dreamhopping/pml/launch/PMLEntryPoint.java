@@ -7,6 +7,7 @@ import me.dreamhopping.pml.events.core.GameStartEvent;
 import me.dreamhopping.pml.impl.MinecraftImpl;
 import me.dreamhopping.pml.mods.launch.loader.RuntimeTransformer;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
+import me.dreamhopping.pml.transformers.GuiNewChatTransformer;
 import net.minecraft.client.main.Main;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 public class PMLEntryPoint {
     public static void start(String[] args, boolean server) { // Called by PMLClientMain and PMLServerMain via reflection
         TransformingClassLoader classLoader = (TransformingClassLoader) PMLEntryPoint.class.getClassLoader();
+        classLoader.registerTransformer(new GuiNewChatTransformer());
         classLoader.registerTransformer(new RuntimeTransformer() {
             @Override
             public boolean willTransform(String name) {
