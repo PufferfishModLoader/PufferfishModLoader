@@ -7,6 +7,9 @@ import me.dreamhopping.pml.impl.MinecraftImpl;
 import me.dreamhopping.pml.mods.launch.loader.RuntimeTransformer;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
 import me.dreamhopping.pml.api.Minecraft;
+import me.dreamhopping.pml.transformers.EntityPlayerSPTransformer;
+import me.dreamhopping.pml.transformers.GuiNewChatTransformer;
+import me.dreamhopping.pml.transformers.MainWindowTransformer;
 import net.minecraft.client.main.Main;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
@@ -17,38 +20,9 @@ import java.util.Arrays;
 public class PMLEntryPoint {
     public static void start(String[] args, boolean server) { // Called by PMLClientMain and PMLServerMain via reflection
         TransformingClassLoader classLoader = (TransformingClassLoader) PMLEntryPoint.class.getClassLoader();
-        // TODO: Add EntityPlayerSPTransformer and GuiNewChatTransformer once mappings are fixed
-
-        // Transform the window title
-        classLoader.registerTransformer(new RuntimeTransformer() {
-            @Override
-            public boolean willTransform(String name) {
-                return name.equals("net/minecraft/client/Minecraft");
-            }
-
-            @Override
-            public ClassNode transform(ClassNode classNode) {
-                for (MethodNode methodNode : classNode.methods) {
-                    if (methodNode.name.equals("init")) {
-                        InsnList list = new InsnList();
-                        list.add(new LdcInsnNode(" | PufferfishModLoader (dev/1.0)"));
-                        list.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;"));
-
-                        // Find the "toString" call and insert before that
-                        for (AbstractInsnNode node = methodNode.instructions.getLast(); node != null; node = node.getPrevious()) {
-                            if (node.getOpcode() == Opcodes.INVOKEVIRTUAL) {
-                                MethodInsnNode castedNode = (MethodInsnNode) node;
-                                if (castedNode.owner.equals("java/lang/StringBuilder") && castedNode.name.equals("toString") && castedNode.desc.equals("()Ljava/lang/String;")) {
-                                   methodNode.instructions.insertBefore(castedNode, list);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                return classNode;
-            }
-        });
+        classLoader.registerTransformer(new GuiNewChatTransformer());
+        classLoader.registerTransformer(new EntityPlayerSPTransformer());
+        classLoader.registerTransformer(new MainWindowTransformer());
 
         Minecraft.setInstance(new MinecraftImpl());
 
