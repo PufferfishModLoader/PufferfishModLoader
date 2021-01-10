@@ -6,7 +6,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.github.PufferfishModLoader:PufferfishGradle:master-SNAPSHOT'
+        classpath 'com.github.PufferfishModLoader:PufferfishGradle:0c31980'
     }
 }
 
@@ -14,7 +14,7 @@ plugins {
     id 'java'
 }
 
-apply plugin: 'me.dreamhopping.pufferfishmodloader.gradle'
+apply plugin: 'me.dreamhopping.pml.gradle'
 
 group 'me.dreamhopping'
 version '1.0.0'
