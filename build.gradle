@@ -6,7 +6,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.github.PufferfishModLoader:PufferfishGradle:7fac160'
+        classpath 'com.github.PufferfishModLoader:PufferfishGradle:master-SNAPSHOT'
     }
 }
 
@@ -21,35 +21,7 @@ version '1.0.0'
 
 minecraft {
     separateVersionJars true
-    // target '1.16.4', '1.15.2', '1.14.4', '1.13.2', '1.12', '1.11', '1.10.2', '1.9.4', '1.8.9'
-    target ('1.16.4') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.15.2') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.14.4') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.13.2') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.12') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.11') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.10.2') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.9.4') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-    target ('1.8.9') {
-        clientMainClass = 'me.dreamhopping.pml.launch.PMLClientMain'
-    }
-
+    target '1.16.4', '1.15.2', '1.14.4', '1.13.2', '1.12', '1.11', '1.10.2', '1.9.4', '1.8.9'
     mods {
         test {
 
