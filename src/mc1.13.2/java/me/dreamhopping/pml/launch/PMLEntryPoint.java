@@ -4,15 +4,13 @@ import me.dreamhopping.pml.PufferfishModLoader;
 import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.core.GameStartEvent;
 import me.dreamhopping.pml.impl.MinecraftImpl;
-import me.dreamhopping.pml.mods.launch.loader.RuntimeTransformer;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
 import me.dreamhopping.pml.api.Minecraft;
 import me.dreamhopping.pml.transformers.EntityPlayerSPTransformer;
 import me.dreamhopping.pml.transformers.GuiNewChatTransformer;
 import me.dreamhopping.pml.transformers.MainWindowTransformer;
+import me.dreamhopping.pml.transformers.NetHandlerPlayClientTransformer;
 import net.minecraft.client.main.Main;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -23,6 +21,7 @@ public class PMLEntryPoint {
         classLoader.registerTransformer(new GuiNewChatTransformer());
         classLoader.registerTransformer(new EntityPlayerSPTransformer());
         classLoader.registerTransformer(new MainWindowTransformer());
+        classLoader.registerTransformer(new NetHandlerPlayClientTransformer());
 
         Minecraft.setInstance(new MinecraftImpl());
 

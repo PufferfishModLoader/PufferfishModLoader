@@ -7,6 +7,7 @@ import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.core.GameStartEvent;
 import me.dreamhopping.pml.mods.launch.loader.RuntimeTransformer;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
+import me.dreamhopping.pml.transformers.ClientPlayNetworkHandlerTransformer;
 import me.dreamhopping.pml.transformers.ClientPlayerEntityTransformer;
 import me.dreamhopping.pml.transformers.InGameHudTransformer;
 import net.minecraft.client.main.Main;
@@ -21,6 +22,7 @@ public class PMLEntryPoint {
         TransformingClassLoader classLoader = (TransformingClassLoader) PMLEntryPoint.class.getClassLoader();
         classLoader.registerTransformer(new InGameHudTransformer());
         classLoader.registerTransformer(new ClientPlayerEntityTransformer());
+        classLoader.registerTransformer(new ClientPlayNetworkHandlerTransformer());
 
         // Transform the window title
         classLoader.registerTransformer(new RuntimeTransformer() {

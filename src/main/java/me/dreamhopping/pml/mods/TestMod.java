@@ -4,12 +4,15 @@ import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.InvokeEvent;
 import me.dreamhopping.pml.events.core.client.chat.ChatReceivedEvent;
 import me.dreamhopping.pml.events.core.client.chat.ChatSentEvent;
+import me.dreamhopping.pml.events.core.client.net.ClientJoinServerEvent;
 import me.dreamhopping.pml.events.core.client.player.ItemDropEvent;
 import me.dreamhopping.pml.events.core.client.player.PlayerRespawnEvent;
 import me.dreamhopping.pml.events.core.mod.ModInitEvent;
 import me.dreamhopping.pml.mods.core.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.net.InetSocketAddress;
 
 @Mod("bruh")
 public class TestMod {
@@ -43,5 +46,9 @@ public class TestMod {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         logger.info("The player has respawned!");
     }
-}
 
+    @InvokeEvent
+    public void onJoinServer(ClientJoinServerEvent event) {
+        logger.info("The client has connected to a server! " + (event.isLocal ? "It is a local server! (singleplayer)" : "It is an external server (multiplayer) Address: " + ((InetSocketAddress) event.address).getHostString()));
+    }
+}
