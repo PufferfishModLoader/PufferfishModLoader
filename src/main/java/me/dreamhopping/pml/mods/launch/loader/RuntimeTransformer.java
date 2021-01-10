@@ -9,5 +9,9 @@ public interface RuntimeTransformer {
         return original;
     }
 
+    default String getImplementationClass(String clazz) {
+        return "me/dreamhopping/pml/transformers/impl/" + clazz + "TransformerImpl";
+    }
+
     ClassNode transform(ClassNode node);
 }
