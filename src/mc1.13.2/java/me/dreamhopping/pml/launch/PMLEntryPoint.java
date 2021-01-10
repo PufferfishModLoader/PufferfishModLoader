@@ -6,10 +6,7 @@ import me.dreamhopping.pml.events.core.GameStartEvent;
 import me.dreamhopping.pml.impl.MinecraftImpl;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
 import me.dreamhopping.pml.api.Minecraft;
-import me.dreamhopping.pml.transformers.EntityPlayerSPTransformer;
-import me.dreamhopping.pml.transformers.GuiNewChatTransformer;
-import me.dreamhopping.pml.transformers.MainWindowTransformer;
-import me.dreamhopping.pml.transformers.NetHandlerPlayClientTransformer;
+import me.dreamhopping.pml.transformers.*;
 import net.minecraft.client.main.Main;
 
 import java.io.File;
@@ -22,6 +19,7 @@ public class PMLEntryPoint {
         classLoader.registerTransformer(new EntityPlayerSPTransformer());
         classLoader.registerTransformer(new MainWindowTransformer());
         classLoader.registerTransformer(new NetHandlerPlayClientTransformer());
+        classLoader.registerTransformer(new MinecraftTransformer());
 
         Minecraft.setInstance(new MinecraftImpl());
 

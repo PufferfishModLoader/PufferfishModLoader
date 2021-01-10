@@ -8,6 +8,8 @@ import me.dreamhopping.pml.events.core.client.net.ClientDisconnectedEvent;
 import me.dreamhopping.pml.events.core.client.net.ClientJoinServerEvent;
 import me.dreamhopping.pml.events.core.client.player.ClientItemDropEvent;
 import me.dreamhopping.pml.events.core.client.player.ClientPlayerRespawnEvent;
+import me.dreamhopping.pml.events.core.client.tick.ClientRenderTickEvent;
+import me.dreamhopping.pml.events.core.client.tick.ClientTickEvent;
 import me.dreamhopping.pml.events.core.mod.ModInitEvent;
 import me.dreamhopping.pml.mods.core.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -56,5 +58,17 @@ public class TestMod {
     @InvokeEvent
     public void onDisconnect(ClientDisconnectedEvent event) {
         logger.info("The client has been disconnected from the server. Reason: " + event.reason);
+    }
+
+    @InvokeEvent
+    public void onTick(ClientTickEvent event) {
+        // WARNING: Do not uncomment this unless you want some sweet sweet log spam
+        // logger.info("Tick!");
+    }
+
+    @InvokeEvent
+    public void onRenderTick(ClientRenderTickEvent event) {
+        // WARNING: Do not uncomment this unless you want some sweet sweet log spam
+        // logger.info("Render Tick!");
     }
 }

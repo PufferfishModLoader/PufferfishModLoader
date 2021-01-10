@@ -11,23 +11,30 @@ public class MinecraftTransformer implements RuntimeTransformer {
 
     public ClassNode transform(ClassNode classNode) {
         for (MethodNode methodNode : classNode.methods) {
-            if (methodNode.name.equals("createDisplay")) {
-                InsnList list = new InsnList();
-                list.add(new LdcInsnNode("Minecraft 1.10.2 | PufferfishModLoader (dev/1.0)"));
+            switch (methodNode.name) {
+                case "createDisplay":
+                    InsnList list = new InsnList();
+                    list.add(new LdcInsnNode("Minecraft 1.10.2 | PufferfishModLoader (dev/1.0)"));
 
-                // Find the "toString" call and insert before that
-                for (AbstractInsnNode node = methodNode.instructions.getLast(); node != null; node = node.getPrevious()) {
-                    if (node.getOpcode() == Opcodes.INVOKESTATIC) {
-                        MethodInsnNode castedNode = (MethodInsnNode) node;
-                        if (castedNode.owner.equals("org/lwjgl/opengl/Display") && castedNode.name.equals("setTitle") && castedNode.desc.equals("(Ljava/lang/String;)V")) {
-                            // Remove the previous "Minecraft (version)" LDC
-                            methodNode.instructions.remove(node.getPrevious());
-                            methodNode.instructions.insertBefore(castedNode, list);
+                    // Find the "toString" call and insert before that
+                    for (AbstractInsnNode node = methodNode.instructions.getLast(); node != null; node = node.getPrevious()) {
+                        if (node.getOpcode() == Opcodes.INVOKESTATIC) {
+                            MethodInsnNode castedNode = (MethodInsnNode) node;
+                            if (castedNode.owner.equals("org/lwjgl/opengl/Display") && castedNode.name.equals("setTitle") && castedNode.desc.equals("(Ljava/lang/String;)V")) {
+                                // Remove the previous "Minecraft (version)" LDC
+                                methodNode.instructions.remove(node.getPrevious());
+                                methodNode.instructions.insertBefore(castedNode, list);
+                            }
                         }
                     }
-                }
 
-                break;
+                    break;
+                case "runTick":
+                    methodNode.instructions.insert(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("Minecraft"), "runTick", "()V"));
+                    break;
+                case "runGameLoop":
+                    methodNode.instructions.insert(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("Minecraft"), "runGameLoop", "()V"));
+                    break;
             }
         }
 
