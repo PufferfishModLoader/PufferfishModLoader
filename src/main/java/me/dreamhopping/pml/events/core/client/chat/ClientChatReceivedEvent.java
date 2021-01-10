@@ -7,11 +7,11 @@ import me.dreamhopping.pml.events.Event;
  * @author dreamhopping
  * @see me.dreamhopping.pml.events.Event
  */
-public class ChatReceivedEvent extends Event {
+public class ClientChatReceivedEvent extends Event {
     public String message;
 
     // TODO: Change this to use chat component
-    public ChatReceivedEvent(String message) {
+    public ClientChatReceivedEvent(String message) {
         this.message = message;
     }
 }

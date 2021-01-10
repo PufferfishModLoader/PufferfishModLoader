@@ -2,11 +2,11 @@ package me.dreamhopping.pml.mods;
 
 import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.InvokeEvent;
-import me.dreamhopping.pml.events.core.client.chat.ChatReceivedEvent;
-import me.dreamhopping.pml.events.core.client.chat.ChatSentEvent;
+import me.dreamhopping.pml.events.core.client.chat.ClientChatReceivedEvent;
+import me.dreamhopping.pml.events.core.client.chat.ClientChatSentEvent;
 import me.dreamhopping.pml.events.core.client.net.ClientJoinServerEvent;
-import me.dreamhopping.pml.events.core.client.player.ItemDropEvent;
-import me.dreamhopping.pml.events.core.client.player.PlayerRespawnEvent;
+import me.dreamhopping.pml.events.core.client.player.ClientItemDropEvent;
+import me.dreamhopping.pml.events.core.client.player.ClientPlayerRespawnEvent;
 import me.dreamhopping.pml.events.core.mod.ModInitEvent;
 import me.dreamhopping.pml.mods.core.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -28,22 +28,22 @@ public class TestMod {
     }
 
     @InvokeEvent
-    public void onChatReceived(ChatReceivedEvent event) {
+    public void onChatReceived(ClientChatReceivedEvent event) {
         logger.info("TestMod received a chat message: " + event.message);
     }
 
     @InvokeEvent
-    public void onChatSent(ChatSentEvent event) {
+    public void onChatSent(ClientChatSentEvent event) {
         logger.info("Client sent message to server: " + event.message);
     }
 
     @InvokeEvent
-    public void onItemDrop(ItemDropEvent event) {
+    public void onItemDrop(ClientItemDropEvent event) {
         logger.info("The client has dropped an item!");
     }
 
     @InvokeEvent
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
+    public void onPlayerRespawn(ClientPlayerRespawnEvent event) {
         logger.info("The player has respawned!");
     }
 

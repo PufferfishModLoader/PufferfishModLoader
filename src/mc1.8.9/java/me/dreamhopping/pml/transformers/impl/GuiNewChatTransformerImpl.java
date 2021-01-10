@@ -1,7 +1,7 @@
 package me.dreamhopping.pml.transformers.impl;
 
 import me.dreamhopping.pml.events.EventBus;
-import me.dreamhopping.pml.events.core.client.chat.ChatReceivedEvent;
+import me.dreamhopping.pml.events.core.client.chat.ClientChatReceivedEvent;
 import net.minecraft.util.IChatComponent;
 
 /**
@@ -11,6 +11,6 @@ import net.minecraft.util.IChatComponent;
 public class GuiNewChatTransformerImpl {
     public static void printChatMessage(IChatComponent chatComponent) {
         // Post the chat message event
-        EventBus.INSTANCE.post(new ChatReceivedEvent(chatComponent.getUnformattedText()));
+        EventBus.INSTANCE.post(new ClientChatReceivedEvent(chatComponent.getUnformattedText()));
     }
 }

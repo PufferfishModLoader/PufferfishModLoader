@@ -7,10 +7,10 @@ import me.dreamhopping.pml.events.Event;
  * @author dreamhopping
  * @see me.dreamhopping.pml.events.Event
  */
-public class ChatSentEvent extends Event {
+public class ClientChatSentEvent extends Event {
     public String message;
 
-    public ChatSentEvent(String message) {
+    public ClientChatSentEvent(String message) {
         this.message = message;
     }
 }
