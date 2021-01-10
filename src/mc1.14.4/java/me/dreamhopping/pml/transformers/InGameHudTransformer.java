@@ -16,7 +16,8 @@ public class InGameHudTransformer implements RuntimeTransformer {
                 list.add(new VarInsnNode(Opcodes.ALOAD, 2));
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("InGameHud"), "addChatMessage", "(Lnet/minecraft/text/Text;)V"));
 
-                methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), list);
+                methodNode.instructions.insert(list);
+                break;
             }
         }
 

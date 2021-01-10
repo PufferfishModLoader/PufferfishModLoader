@@ -22,6 +22,7 @@ public class ClientPlayNetworkHandlerTransformer implements RuntimeTransformer {
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("ClientPlayNetworkHandler"), "onGameJoin", "(ZLjava/net/SocketAddress;)V"));
 
                 methodNode.instructions.insert(list);
+                break;
             }
         }
 

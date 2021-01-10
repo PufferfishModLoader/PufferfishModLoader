@@ -17,6 +17,7 @@ public class GuiNewChatTransformer implements RuntimeTransformer {
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("GuiNewChat"), "printChatMessage", "(Lnet/minecraft/util/text/ITextComponent;)V"));
 
                 methodNode.instructions.insert(list);
+                break;
             }
         }
 
