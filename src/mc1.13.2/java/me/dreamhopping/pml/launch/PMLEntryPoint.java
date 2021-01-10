@@ -17,6 +17,7 @@ import java.util.Arrays;
 public class PMLEntryPoint {
     public static void start(String[] args, boolean server) { // Called by PMLClientMain and PMLServerMain via reflection
         TransformingClassLoader classLoader = (TransformingClassLoader) PMLEntryPoint.class.getClassLoader();
+        // TODO: Add EntityPlayerSPTransformer and GuiNewChatTransformer once mappings are fixed
 
         // Transform the window title
         classLoader.registerTransformer(new RuntimeTransformer() {

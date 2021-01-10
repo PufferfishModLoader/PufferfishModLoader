@@ -7,6 +7,7 @@ import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.core.GameStartEvent;
 import me.dreamhopping.pml.mods.launch.loader.RuntimeTransformer;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
+import me.dreamhopping.pml.transformers.ClientPlayerEntityTransformer;
 import me.dreamhopping.pml.transformers.InGameHudTransformer;
 import net.minecraft.client.main.Main;
 import org.objectweb.asm.Opcodes;
@@ -19,6 +20,7 @@ public class PMLEntryPoint {
     public static void start(String[] args, boolean server) { // Called by PMLClientMain and PMLServerMain via reflection
         TransformingClassLoader classLoader = (TransformingClassLoader) PMLEntryPoint.class.getClassLoader();
         classLoader.registerTransformer(new InGameHudTransformer());
+        classLoader.registerTransformer(new ClientPlayerEntityTransformer());
 
         // Transform the window title
         classLoader.registerTransformer(new RuntimeTransformer() {
