@@ -1,7 +1,5 @@
 package me.dreamhopping.pml.transformers.impl;
 
-import me.dreamhopping.pml.events.EventBus;
-import me.dreamhopping.pml.events.core.client.ChatMessageEvent;
 import net.minecraft.util.text.ITextComponent;
 
 /**

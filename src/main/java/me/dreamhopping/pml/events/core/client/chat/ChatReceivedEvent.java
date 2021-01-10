@@ -1,4 +1,4 @@
-package me.dreamhopping.pml.events.core.client;
+package me.dreamhopping.pml.events.core.client.chat;
 
 import me.dreamhopping.pml.events.Event;
 
@@ -7,11 +7,11 @@ import me.dreamhopping.pml.events.Event;
  * @author dreamhopping
  * @see me.dreamhopping.pml.events.Event
  */
-public class ChatMessageEvent extends Event {
+public class ChatReceivedEvent extends Event {
     public String message;
 
     // TODO: Change this to use chat component
-    public ChatMessageEvent(String message) {
+    public ChatReceivedEvent(String message) {
         this.message = message;
     }
 }
