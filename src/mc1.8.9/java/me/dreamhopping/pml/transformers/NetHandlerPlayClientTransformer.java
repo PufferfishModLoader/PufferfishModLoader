@@ -7,6 +7,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
 import java.nio.channels.NetworkChannel;
+import java.util.List;
 
 public class NetHandlerPlayClientTransformer implements RuntimeTransformer {
     public boolean willTransform(String name) {
@@ -26,7 +27,12 @@ public class NetHandlerPlayClientTransformer implements RuntimeTransformer {
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("NetHandlerPlayClient"), "handleJoinGame", "(ZLjava/net/SocketAddress;)V"));
 
                 methodNode.instructions.insert(list);
-                break;
+            } else if (methodNode.name.equals("onDisconnect")) {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(Opcodes.ALOAD, 1));
+                list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("NetHandlerPlayClient"), "handleDisconnect", "(Lnet/minecraft/util/IChatComponent;)V"));
+
+                methodNode.instructions.insert(list);
             }
         }
 

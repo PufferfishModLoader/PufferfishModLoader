@@ -22,7 +22,12 @@ public class NetHandlerPlayClientTransformer implements RuntimeTransformer {
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("NetHandlerPlayClient"), "handleJoinGame", "(ZLjava/net/SocketAddress;)V"));
 
                 methodNode.instructions.insert(list);
-                break;
+            } else if (methodNode.name.equals("onDisconnect")) {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(Opcodes.ALOAD, 1));
+                list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("NetHandlerPlayClient"), "handleDisconnect", "(Lnet/minecraft/util/text/ITextComponent;)V"));
+
+                methodNode.instructions.insert(list);
             }
         }
 

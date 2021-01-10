@@ -4,6 +4,7 @@ import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.InvokeEvent;
 import me.dreamhopping.pml.events.core.client.chat.ClientChatReceivedEvent;
 import me.dreamhopping.pml.events.core.client.chat.ClientChatSentEvent;
+import me.dreamhopping.pml.events.core.client.net.ClientDisconnectedEvent;
 import me.dreamhopping.pml.events.core.client.net.ClientJoinServerEvent;
 import me.dreamhopping.pml.events.core.client.player.ClientItemDropEvent;
 import me.dreamhopping.pml.events.core.client.player.ClientPlayerRespawnEvent;
@@ -50,5 +51,10 @@ public class TestMod {
     @InvokeEvent
     public void onJoinServer(ClientJoinServerEvent event) {
         logger.info("The client has connected to a server! " + (event.isLocal ? "It is a local server! (singleplayer)" : "It is an external server (multiplayer) Address: " + ((InetSocketAddress) event.address).getHostString()));
+    }
+
+    @InvokeEvent
+    public void onDisconnect(ClientDisconnectedEvent event) {
+        logger.info("The client has been disconnected from the server. Reason: " + event.reason);
     }
 }

@@ -22,7 +22,12 @@ public class ClientPlayNetworkHandlerTransformer implements RuntimeTransformer {
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("ClientPlayNetworkHandler"), "onGameJoin", "(ZLjava/net/SocketAddress;)V"));
 
                 methodNode.instructions.insert(list);
-                break;
+            } else if (methodNode.name.equals("onDisconnected")) {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(Opcodes.ALOAD, 1));
+                list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, getImplementationClass("ClientPlayNetworkHandler"), "onDisconnected", "(Lnet/minecraft/text/Text;)V"));
+
+                methodNode.instructions.insert(list);
             }
         }
 

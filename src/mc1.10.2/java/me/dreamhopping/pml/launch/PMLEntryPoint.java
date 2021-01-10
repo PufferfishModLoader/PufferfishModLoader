@@ -9,6 +9,7 @@ import me.dreamhopping.pml.mods.launch.loader.RuntimeTransformer;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
 import me.dreamhopping.pml.transformers.EntityPlayerSPTransformer;
 import me.dreamhopping.pml.transformers.GuiNewChatTransformer;
+import me.dreamhopping.pml.transformers.NetHandlerPlayClientTransformer;
 import net.minecraft.client.main.Main;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
@@ -21,6 +22,7 @@ public class PMLEntryPoint {
         TransformingClassLoader classLoader = (TransformingClassLoader) PMLEntryPoint.class.getClassLoader();
         classLoader.registerTransformer(new GuiNewChatTransformer());
         classLoader.registerTransformer(new EntityPlayerSPTransformer());
+        classLoader.registerTransformer(new NetHandlerPlayClientTransformer());
 
         classLoader.registerTransformer(new RuntimeTransformer() {
             @Override
