@@ -26,9 +26,9 @@ public class MinecraftTransformer implements RuntimeTransformer {
                         }
                     }
                 }
-            }
 
-            break;
+                break;
+            }
         }
 
         return classNode;
