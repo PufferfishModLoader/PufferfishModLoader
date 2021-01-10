@@ -1,5 +1,6 @@
 package me.dreamhopping.pml.mods.launch.loader;
 
+import me.dreamhopping.pml.launch.AccessTransformer;
 import org.apache.commons.io.IOUtils;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -36,6 +37,8 @@ public class TransformingClassLoader extends URLClassLoader {
         addClassLoadExclusion("me.dreamhopping.pml.mods.launch.loader."); // otherwise you can't use this class anywhere except the main class
         addClassLoadExclusion("org.apache.commons.io.");
         addClassLoadExclusion("org.objectweb.asm.");
+
+        registerTransformer(new AccessTransformer());
     }
 
     public void registerTransformer(RuntimeTransformer transformer) {
