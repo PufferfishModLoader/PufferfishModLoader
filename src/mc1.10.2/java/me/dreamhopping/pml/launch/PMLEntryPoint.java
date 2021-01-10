@@ -9,6 +9,7 @@ import me.dreamhopping.pml.mods.launch.loader.RuntimeTransformer;
 import me.dreamhopping.pml.mods.launch.loader.TransformingClassLoader;
 import me.dreamhopping.pml.transformers.EntityPlayerSPTransformer;
 import me.dreamhopping.pml.transformers.GuiNewChatTransformer;
+import me.dreamhopping.pml.transformers.MinecraftTransformer;
 import me.dreamhopping.pml.transformers.NetHandlerPlayClientTransformer;
 import net.minecraft.client.main.Main;
 import org.objectweb.asm.Opcodes;
@@ -23,36 +24,7 @@ public class PMLEntryPoint {
         classLoader.registerTransformer(new GuiNewChatTransformer());
         classLoader.registerTransformer(new EntityPlayerSPTransformer());
         classLoader.registerTransformer(new NetHandlerPlayClientTransformer());
-
-        classLoader.registerTransformer(new RuntimeTransformer() {
-            @Override
-            public boolean willTransform(String name) {
-                return name.equals("net/minecraft/client/Minecraft");
-            }
-
-            @Override
-            public ClassNode transform(ClassNode classNode) {
-                for (MethodNode methodNode : classNode.methods) {
-                    if (methodNode.name.equals("createDisplay")) {
-                        InsnList list = new InsnList();
-                        list.add(new LdcInsnNode("Minecraft 1.10.2 | PufferfishModLoader (dev/1.0)"));
-
-                        // Find the "toString" call and insert before that
-                        for (AbstractInsnNode node = methodNode.instructions.getLast(); node != null; node = node.getPrevious()) {
-                            if (node.getOpcode() == Opcodes.INVOKESTATIC) {
-                                MethodInsnNode castedNode = (MethodInsnNode) node;
-                                if (castedNode.owner.equals("org/lwjgl/opengl/Display") && castedNode.name.equals("setTitle") && castedNode.desc.equals("(Ljava/lang/String;)V")) {
-                                    // Remove the previous "Minecraft (version)" LDC
-                                    methodNode.instructions.remove(node.getPrevious());
-                                    methodNode.instructions.insertBefore(castedNode, list);                                }
-                            }
-                        }
-                    }
-                }
-
-                return classNode;
-            }
-        });
+        classLoader.registerTransformer(new MinecraftTransformer());
 
         Minecraft.setInstance(new MinecraftImpl());
 
