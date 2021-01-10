@@ -3,6 +3,7 @@ package me.dreamhopping.pml.transformers.impl;
 import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.core.client.chat.ChatSentEvent;
 import me.dreamhopping.pml.events.core.client.player.ItemDropEvent;
+import me.dreamhopping.pml.events.core.client.player.PlayerRespawnEvent;
 import me.dreamhopping.pml.transformers.ClientPlayerEntityTransformer;
 
 /**
@@ -17,5 +18,9 @@ public class ClientPlayerEntityTransformerImpl {
     public static void dropSelectedItem(boolean dropAllItems) {
         // TODO: Use dropAllItems (needs further research on when it's true / false)
         EventBus.INSTANCE.post(new ItemDropEvent());
+    }
+
+    public static void respawn() {
+        EventBus.INSTANCE.post(new PlayerRespawnEvent());
     }
 }
