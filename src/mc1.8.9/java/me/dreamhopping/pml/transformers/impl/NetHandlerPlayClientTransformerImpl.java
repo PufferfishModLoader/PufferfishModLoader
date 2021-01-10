@@ -1,8 +1,8 @@
 package me.dreamhopping.pml.transformers.impl;
 
-import io.netty.channel.local.LocalAddress;
+import me.dreamhopping.pml.events.EventBus;
+import me.dreamhopping.pml.events.core.client.net.ClientJoinServerEvent;
 
-import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
 /*
@@ -11,10 +11,6 @@ import java.net.SocketAddress;
  */
 public class NetHandlerPlayClientTransformerImpl {
     public static void handleJoinGame(boolean isLocal, SocketAddress address) {
-        if (address instanceof InetSocketAddress) {
-            System.out.println("Joining game at address: " + ((InetSocketAddress) address).getAddress().toString());
-        } else {
-            System.out.println("Joining game, is local: " + isLocal);
-        }
+        EventBus.INSTANCE.post(new ClientJoinServerEvent(isLocal, address));
     }
 }
