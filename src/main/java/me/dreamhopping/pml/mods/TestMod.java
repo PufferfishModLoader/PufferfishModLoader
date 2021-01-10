@@ -4,6 +4,7 @@ import me.dreamhopping.pml.events.EventBus;
 import me.dreamhopping.pml.events.InvokeEvent;
 import me.dreamhopping.pml.events.core.client.chat.ChatReceivedEvent;
 import me.dreamhopping.pml.events.core.client.chat.ChatSentEvent;
+import me.dreamhopping.pml.events.core.client.player.ItemDropEvent;
 import me.dreamhopping.pml.events.core.mod.ModInitEvent;
 import me.dreamhopping.pml.mods.core.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +31,11 @@ public class TestMod {
     @InvokeEvent
     public void onChatSent(ChatSentEvent event) {
         logger.info("Client sent message to server: " + event.message);
+    }
+
+    @InvokeEvent
+    public void onItemDrop(ItemDropEvent event) {
+        logger.info("The client has dropped an item!");
     }
 }
 

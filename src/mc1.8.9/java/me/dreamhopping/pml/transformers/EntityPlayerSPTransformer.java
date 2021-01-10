@@ -19,6 +19,12 @@ public class EntityPlayerSPTransformer implements RuntimeTransformer {
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "me/dreamhopping/pml/transformers/impl/EntityPlayerSPTransformerImpl", "sendChatMessage", "(Ljava/lang/String;)V"));
 
                 methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), list);
+            } else if (methodNode.name.equals("dropOneItem")) {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(Opcodes.ILOAD, 1));
+                list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "me/dreamhopping/pml/transformers/impl/EntityPlayerSPTransformerImpl", "dropItem", "(Z)V"));
+
+                methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), list);
             }
         }
 

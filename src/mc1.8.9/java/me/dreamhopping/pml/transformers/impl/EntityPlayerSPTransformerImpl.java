@@ -1,9 +1,8 @@
 package me.dreamhopping.pml.transformers.impl;
 
 import me.dreamhopping.pml.events.EventBus;
-import me.dreamhopping.pml.events.core.client.chat.ChatReceivedEvent;
 import me.dreamhopping.pml.events.core.client.chat.ChatSentEvent;
-import net.minecraft.util.IChatComponent;
+import me.dreamhopping.pml.events.core.client.player.ItemDropEvent;
 
 /**
  * An implementation for the EntityPlayerSPTransformer class
@@ -13,5 +12,10 @@ public class EntityPlayerSPTransformerImpl {
     public static void sendChatMessage(String message) {
         // Post the chat message event
         EventBus.INSTANCE.post(new ChatSentEvent(message));
+    }
+
+    public static void dropItem(boolean dropAllItems) {
+        // TODO: Use dropAllItems (needs further research on when it's true / false)
+        EventBus.INSTANCE.post(new ItemDropEvent());
     }
 }

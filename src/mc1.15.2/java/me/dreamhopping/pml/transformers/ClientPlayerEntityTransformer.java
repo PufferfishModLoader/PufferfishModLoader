@@ -19,6 +19,12 @@ public class ClientPlayerEntityTransformer implements RuntimeTransformer {
                 list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "me/dreamhopping/pml/transformers/impl/ClientPlayerEntityTransformerImpl", "sendChatMessage", "(Ljava/lang/String;)V"));
 
                 methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), list);
+            } else if (methodNode.name.equals("dropSelectedItem")) {
+                InsnList list = new InsnList();
+                list.add(new VarInsnNode(Opcodes.ILOAD, 1));
+                list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "me/dreamhopping/pml/transformers/impl/ClientPlayerEntityTransformerImpl", "dropSelectedItem", "(Z)V"));
+
+                methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), list);
             }
         }
 
