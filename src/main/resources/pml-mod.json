@@ -1,0 +1,8 @@
+{
+  "mods": [
+    {
+      "id": "bruh",
+      "class": "me.dreamhopping.pml.mods.impl.TestMod"
+    }
+  ]
+}
