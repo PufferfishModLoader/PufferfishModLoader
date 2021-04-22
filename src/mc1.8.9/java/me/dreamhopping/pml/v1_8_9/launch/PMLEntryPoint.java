@@ -1,11 +1,13 @@
 package me.dreamhopping.pml.v1_8_9.launch;
 
 import me.dreamhopping.pml.PufferfishModLoader;
+import me.dreamhopping.pml.launch.loader.PMLClassLoader;
 import net.minecraft.client.main.Main;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +25,23 @@ public class PMLEntryPoint {
                 workDir = new File(".").getCanonicalFile();
             }
         }
+
+        PMLClassLoader classLoader = (PMLClassLoader) Thread.currentThread().getContextClassLoader();
+        classLoader.addTransformer(classNode -> {
+            if (classNode.name.equals("net/minecraft/client/Minecraft")) {
+                for (MethodNode methodNode : classNode.methods) {
+                    if (methodNode.name.equals("startGame")) {
+                        InsnList insnList = new InsnList();
+                        insnList.add(new FieldInsnNode(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"));
+                        insnList.add(new LdcInsnNode("(startGame) Hello from a 1.8.9 transformer!"));
+                        insnList.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false));
+
+                        methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), insnList);
+                    }
+                }
+            }
+            return classNode;
+        });
 
         PufferfishModLoader.INSTANCE.initialize(workDir);
         Main.main(args);

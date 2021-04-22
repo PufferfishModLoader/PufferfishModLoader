@@ -7,6 +7,7 @@ import java.util.*
 object PMLLauncher {
     private val logger = LogManager.getLogger("PML: Launcher")
 
+    @JvmStatic
     fun start(args: Array<String>?, client: Boolean) {
         val properties = Properties()
         PMLLauncher::class.java.getResourceAsStream("/pml.properties").use { stream -> properties.load(stream) }
@@ -22,7 +23,7 @@ object PMLLauncher {
         try {
             startMethod.invoke(null, args, !client)
         } catch (e: InvocationTargetException) {
-            logger.error("An error occurred when invoking $entryPointClass#start")
+            logger.error("An error occurred when invoking $entryPointClass#start: ", e)
         }
     }
 }
