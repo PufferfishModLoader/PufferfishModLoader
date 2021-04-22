@@ -93,9 +93,8 @@ object ModLoader {
      * @see ModLoader.load
      */
     fun unload() {
-        loadedMods.forEach { (id, mod) ->
+        loadedMods.forEach { (_, mod) ->
             mod.unload()
-            loadedMods.remove(id)
         }
     }
 
