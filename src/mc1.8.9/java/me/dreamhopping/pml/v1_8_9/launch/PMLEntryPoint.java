@@ -2,7 +2,9 @@ package me.dreamhopping.pml.v1_8_9.launch;
 
 import me.dreamhopping.pml.PufferfishModLoader;
 import me.dreamhopping.pml.launch.loader.PMLClassLoader;
+import me.dreamhopping.pml.launch.transformer.ClassTransformer;
 import net.minecraft.client.main.Main;
+import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
@@ -27,8 +29,15 @@ public class PMLEntryPoint {
         }
 
         PMLClassLoader classLoader = (PMLClassLoader) Thread.currentThread().getContextClassLoader();
-        classLoader.addTransformer(classNode -> {
-            if (classNode.name.equals("net/minecraft/client/Minecraft")) {
+        classLoader.addTransformer(new ClassTransformer() {
+            @Override
+            public boolean willTransform(@NotNull String name) {
+                return name.equals("net/minecraft/client/Minecraft");
+            }
+
+            @NotNull
+            @Override
+            public ClassNode transformClass(@NotNull ClassNode classNode) {
                 for (MethodNode methodNode : classNode.methods) {
                     if (methodNode.name.equals("startGame")) {
                         InsnList insnList = new InsnList();
@@ -39,8 +48,8 @@ public class PMLEntryPoint {
                         methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), insnList);
                     }
                 }
+                return classNode;
             }
-            return classNode;
         });
 
         PufferfishModLoader.INSTANCE.initialize(workDir);

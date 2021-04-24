@@ -39,6 +39,8 @@ class PMLClassLoader : URLClassLoader(emptyArray(), null) {
         var bytes = getResourceAsStream("$pathName.class")?.use { it.readBytes() } ?: throw ClassNotFoundException()
 
         transformers.forEach { transformer ->
+            if (!transformer.willTransform(pathName)) return@forEach
+
             // Setup a classreader and read the class from the bytes
             val classReader = ClassReader(bytes)
             val classNode = ClassNode()
