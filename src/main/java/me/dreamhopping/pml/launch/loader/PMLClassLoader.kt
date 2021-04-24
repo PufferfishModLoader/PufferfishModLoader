@@ -23,7 +23,8 @@ class PMLClassLoader : URLClassLoader(emptyArray(), null) {
             "argo.",
             "org.objectweb.asm.",
             "me.dreamhopping.pml.launch.loader",
-            "me.dreamhopping.pml.launch.transformer"
+            "me.dreamhopping.pml.launch.transformer",
+            "com.intellij."
         )
     private val transformers = mutableListOf<ClassTransformer>()
     private val exportTransformedClass = System.getProperty("exportTransformedClass", "false").toBoolean()
@@ -60,10 +61,14 @@ class PMLClassLoader : URLClassLoader(emptyArray(), null) {
             transformedFile.writeBytes(bytes)
         }
 
-        val clazz = defineClass(name, bytes, 0, bytes.size)
+        val clazz = defineClass(name, bytes)
         cachedClasses[name] = clazz
 
         return clazz
+    }
+
+    fun defineClass(name: String, bytes: ByteArray): Class<*> {
+        return super.defineClass(name, bytes, 0, bytes.size)
     }
 
     override fun getResource(name: String): URL? = javaClass.classLoader.getResource(name)
