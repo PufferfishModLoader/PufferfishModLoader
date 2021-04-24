@@ -27,9 +27,13 @@ class PMLClassLoader : URLClassLoader(emptyArray(), null) {
         )
     private val transformers = mutableListOf<ClassTransformer>()
     private val exportTransformedClass = System.getProperty("exportTransformedClass", "false").toBoolean()
+    private val cachedClasses = mutableMapOf<String, Class<*>>()
 
     override fun loadClass(name: String): Class<*> {
         if (exclusions.any { name.startsWith(it) }) return javaClass.classLoader.loadClass(name)
+
+        val cachedClass = cachedClasses[name]
+        if (cachedClass != null) return cachedClass
 
         val pathName = name.replace(".", "/")
         var bytes = getResourceAsStream("$pathName.class")?.use { it.readBytes() } ?: throw ClassNotFoundException()
@@ -54,7 +58,10 @@ class PMLClassLoader : URLClassLoader(emptyArray(), null) {
             transformedFile.writeBytes(bytes)
         }
 
-        return defineClass(name, bytes, 0, bytes.size)
+        val clazz = defineClass(name, bytes, 0, bytes.size)
+        cachedClasses[name] = clazz
+
+        return clazz
     }
 
     override fun getResource(name: String): URL? = javaClass.classLoader.getResource(name)
