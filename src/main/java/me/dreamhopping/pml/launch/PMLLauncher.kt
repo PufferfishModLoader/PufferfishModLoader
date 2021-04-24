@@ -1,5 +1,7 @@
 package me.dreamhopping.pml.launch
 
+import me.dreamhopping.pml.launch.loader.PMLClassLoader
+import me.dreamhopping.pml.launch.transformer.impl.AccessTransformer
 import org.apache.logging.log4j.LogManager
 import java.lang.reflect.InvocationTargetException
 import java.util.*
@@ -9,6 +11,9 @@ object PMLLauncher {
 
     @JvmStatic
     fun start(args: Array<String>?, client: Boolean) {
+        val classLoader = javaClass.classLoader as PMLClassLoader
+        classLoader.addTransformer(AccessTransformer())
+
         val properties = Properties()
         PMLLauncher::class.java.getResourceAsStream("/pml.properties").use { stream -> properties.load(stream) }
 
