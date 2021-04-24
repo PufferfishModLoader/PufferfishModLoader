@@ -55,17 +55,33 @@ object ModLoader {
     /**
      * Loads all discovered mods
      * The class has an instance created, then the [Mod.initialize] function is called
-     * If the specified class is not an instance of [Mod], or the identifier does not match, the mod will be skipped
+     * If the specified class is not an instance of [Mod], the mod will be skipped
      */
     private fun loadMods() {
-        discoveredMods.forEach {
-            val clazz = Class.forName(it.clazz, false, this::class.java.classLoader)
-            val instance = clazz.getDeclaredConstructor().newInstance() as? Mod
-                ?: return@forEach logger.warn("${it.clazz} (${it.id}) is not an instance of Mod! Skipping...")
-
-            instance.initialize()
-            loadedMods[it.id] = instance
+        discoveredMods.forEach { entry ->
+            try {
+                loadMod(entry)
+            } catch (e: Exception) {
+                logger.error("An exception occurred when loading \"${entry.clazz}\" (${entry.id}): ", e)
+            }
         }
+    }
+
+    /**
+     * Loads a discovered mod from its [PMLModJson.Entry]
+     *
+     * @param entry the instance of [PMLModJson.Entry] from the pml-mod.json file
+     * @throws IllegalStateException if the mod class in the entry is not an instance of [Mod]
+     */
+    private fun loadMod(entry: PMLModJson.Entry) {
+        val (id, classString) = entry
+        val clazz = javaClass.classLoader.loadClass(classString)
+
+        val instance = clazz.getDeclaredConstructor().newInstance() as? Mod
+            ?: throw IllegalStateException("Class is not an instance of Mod! Skipping...")
+
+        instance.initialize()
+        loadedMods[id] = instance
     }
 
     /**
