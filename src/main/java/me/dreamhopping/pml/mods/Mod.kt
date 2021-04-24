@@ -5,5 +5,5 @@ package me.dreamhopping.pml.mods
  */
 interface Mod {
     fun initialize()
-    fun unload() {}
+    @JvmDefault fun unload() {}
 }
