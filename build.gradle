@@ -54,13 +54,22 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    provided
+}
+
+sourceSets {
+    main { compileClasspath += configurations.provided }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    provided "org.apache.logging.log4j:log4j-core:2.0-beta9"
+
     api "org.ow2.asm:asm-tree:8.0.1"
 
     // Provided by Minecraft at runtime, but we would like PufferfishAPI and other children to access them
     api "com.google.code.gson:gson:2.2.4"
-    api "org.apache.logging.log4j:log4j-core:2.0-beta9"
 }
 
 compileKotlin {
