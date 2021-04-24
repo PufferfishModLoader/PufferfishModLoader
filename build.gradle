@@ -30,10 +30,10 @@ minecraft {
     separateVersionJars()
     loader()
 
-    target '1.16.4', '1.15.2', '1.14.4', '1.13.2', '1.12', '1.11', '1.10.2', '1.9.4', '1.8.9'
-
     clientRunClass = "me.dreamhopping.pml.launch.PMLClientMain"
     serverRunClass = "me.dreamhopping.pml.launch.PMLServerMain"
+
+    target '1.16.4', '1.15.2', '1.14.4', '1.13.2', '1.12', '1.11', '1.10.2', '1.9.4', '1.8.9'
 }
 
 task('sourcesJar', type: org.gradle.jvm.tasks.Jar) {

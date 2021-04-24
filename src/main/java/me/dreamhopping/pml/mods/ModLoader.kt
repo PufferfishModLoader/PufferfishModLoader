@@ -60,11 +60,8 @@ object ModLoader {
     private fun loadMods() {
         discoveredMods.forEach {
             val clazz = Class.forName(it.clazz, false, this::class.java.classLoader)
-            val instance = clazz.newInstance() as? Mod
+            val instance = clazz.getDeclaredConstructor().newInstance() as? Mod
                 ?: return@forEach logger.warn("${it.clazz} (${it.id}) is not an instance of Mod! Skipping...")
-
-            if (instance.id != it.id)
-                return@forEach logger.warn("${it.id} (pml-mod.json) does not match ${instance.id} (${it.clazz})! Skipping...")
 
             instance.initialize()
             loadedMods[it.id] = instance
